@@ -19,8 +19,12 @@ CONFIG(debug, debug|release) {
 
 
 SOURCES += main.cpp\
-        MainWindow.cpp
+        MainWindow.cpp \
+    Android/AndroidCompile.cpp \
+    Utils/FileUtils.cpp
 
-HEADERS  += MainWindow.h
+HEADERS  += MainWindow.h \
+    Android/AndroidCompile.h \
+    Utils/FileUtils.h
 
 FORMS    += MainWindow.ui
