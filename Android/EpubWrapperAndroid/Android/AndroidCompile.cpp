@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QDateTime>
 #include "Utils/FileUtils.h"
+#include <QCoreApplication>
 
 AndroidCompile::AndroidCompile()
 {
@@ -111,6 +112,85 @@ void AndroidCompile::createProjectCoverImages()
     //TODO: implement
 }
 
+void AndroidCompile::copyEpub()
+{
+    QString book_epub = QDir(_build_dir).absoluteFilePath(QDir::toNativeSeparators("assets/data/book.epub"));
+
+    if(QFile::copy(_input_epub_name, book_epub))
+    {
+        emit logMessage(tr("Copy book: %1").arg(_input_epub_name));
+    }
+    else
+    {
+        throw tr("Can't copy book: %1").arg(_input_epub_name);
+    }
+}
+
+void AndroidCompile::buildApk()
+{
+    emit logMessage(tr("Compiling Android Project..."));
+    QProcess process;
+    QStringList arguments;
+    arguments.push_back("/C");
+    arguments.push_back("ant.bat");
+    arguments.push_back("release");
+    process.setProcessEnvironment(_environment);
+    process.setWorkingDirectory(_build_dir);
+    process.setProcessChannelMode(QProcess::MergedChannels);
+    process.start("cmd.exe", arguments);
+
+    // Wait for it to start
+    if(!process.waitForStarted())
+    {
+        throw tr("Can't start Ant");
+    }
+
+    while(process.waitForReadyRead())
+    {
+        QByteArray data = process.readAll();
+        emit logMessage(data.data());
+        QCoreApplication::processEvents();
+    }
+
+    process.waitForFinished();
+
+    if(process.exitCode() != 0)
+    {
+        throw tr("Build Android Project failed");
+    }
+}
+void AndroidCompile::copyFinalApk()
+{
+    QString apk = QDir(_build_dir).absoluteFilePath(QDir::toNativeSeparators("bin/Wrapper-release.apk"));
+    if(!QFile::exists(apk))
+    {
+        throw tr("Build file not found: %1").arg(apk);
+    }
+
+    if(QFile::exists(_output_apk_name))
+    {
+        warningMessage(tr("Output file exists: %1").arg(_output_apk_name));
+        if(QFile(_output_apk_name).remove())
+        {
+            logMessage(tr("Remove old output file"));
+        }
+        else
+        {
+            throw tr("Can't remove output file: %1").arg(_output_apk_name);
+        }
+    }
+
+    //TODO: mkdir
+    if(QFile::copy(apk, _output_apk_name))
+    {
+        logMessage(tr("Apk moved"));
+    }
+    else
+    {
+        throw tr("Can't write output file: %1").arg(_output_apk_name);
+    }
+}
+
 void AndroidCompile::applyPackageAndBookName()
 {
     {
@@ -134,6 +214,13 @@ void AndroidCompile::applyPackageAndBookName()
         FileUtils::writeFileContents(R_file, R);
     }
 
+    {
+        //Update local.properties
+        QString prop_file = QDir(_build_dir).absoluteFilePath("local.properties");
+
+        emit logMessage(tr("Create: %1").arg(prop_file));
+        FileUtils::writeFileContents(prop_file, QString("sdk.dir=%1").arg(QDir::fromNativeSeparators(_android_sdk_path)));
+    }
 }
 
 void AndroidCompile::startCompilation()
@@ -148,6 +235,9 @@ void AndroidCompile::startCompilation()
         copyProjectTemplate();
         createProjectCoverImages();
         applyPackageAndBookName();
+        copyEpub();
+        buildApk();
+        copyFinalApk();
     }
     catch (QString error)
     {
@@ -155,7 +245,7 @@ void AndroidCompile::startCompilation()
         success = false;
     }
 
-    //cleanOutputDir();
+    cleanOutputDir();
 
     emit finished(success, result_text);
 }

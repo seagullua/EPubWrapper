@@ -55,9 +55,9 @@ void MainWindow::onStart()
     _compiler.setCoverImageName("");
     _compiler.setInputEpub("E:\\downloads\\moby-dick-20120118.epub");
     _compiler.setJdkPath("C:\\Program Files\\Java\\jdk1.7.0_10\\bin");
-    _compiler.setOutputApkName("E:\\mobidick\\mobidick.apk");
+    _compiler.setOutputApkName("E:\\mobidick.apk");
     _compiler.setPackageName("book.mobidick");
-    _compiler.setTemplatePath("F:\\GitHub\\Wrapper");
+    _compiler.setTemplatePath("F:\\GitHub\\EPubWrapper\\Android\\external\\wrapper-template");
 
     _compiler.startCompilation();
 }

@@ -118,6 +118,10 @@ private:
      * @brief Applies book and package name for template
      */
     void applyPackageAndBookName();
+
+    void copyEpub();
+    void buildApk();
+    void copyFinalApk();
 };
 
 #endif // ANDROIDCOMPILE_H
