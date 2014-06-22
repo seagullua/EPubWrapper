@@ -106,6 +106,36 @@ void AndroidCompile::copyProjectTemplate()
     }
 }
 
+void AndroidCompile::createProjectCoverImages()
+{
+    //TODO: implement
+}
+
+void AndroidCompile::applyPackageAndBookName()
+{
+    {
+        //Update manifest file
+        QString manifest_file = QDir(_build_dir).absoluteFilePath("AndroidManifest.xml");
+
+        emit logMessage(tr("Update: %1").arg(manifest_file));
+        QString manifest = FileUtils::readFileContents(manifest_file);
+        manifest = manifest.replace("{{bookName}}", _book_name);
+        manifest = manifest.replace("com.book.test", _package_name);
+        FileUtils::writeFileContents(manifest_file, manifest);
+    }
+
+    {
+        //Update R file
+        QString R_file = QDir(_build_dir).absoluteFilePath(QDir::toNativeSeparators("src/org/geometerplus/zlibrary/ui/android/R.java"));
+        emit logMessage(tr("Update: %1").arg(R_file));
+
+        QString R = FileUtils::readFileContents(R_file);
+        R = R.replace("com.book.test", _package_name);
+        FileUtils::writeFileContents(R_file, R);
+    }
+
+}
+
 void AndroidCompile::startCompilation()
 {
     bool success = true;
@@ -116,6 +146,8 @@ void AndroidCompile::startCompilation()
         prepareEnvironment();
         prepareOutputDir();
         copyProjectTemplate();
+        createProjectCoverImages();
+        applyPackageAndBookName();
     }
     catch (QString error)
     {
@@ -123,7 +155,9 @@ void AndroidCompile::startCompilation()
         success = false;
     }
 
-    cleanOutputDir();
+    //cleanOutputDir();
 
     emit finished(success, result_text);
 }
+
+

@@ -59,3 +59,28 @@ bool FileUtils::copyDir(const QString &srcPath, const QString &dstPath)
     QCoreApplication::processEvents();
     return true;
 }
+
+QString FileUtils::readFileContents(const QString& file_name)
+{
+    QFile f(file_name);
+    if (!f.open(QFile::ReadOnly | QFile::Text))
+    {
+        throw QObject::tr("Can't open file: %1").arg(file_name);
+    }
+    QTextStream in(&f);
+    in.setCodec("UTF-8");
+    return in.readAll();
+}
+
+void FileUtils::writeFileContents(const QString& file_name, const QString& contents)
+{
+    QFile file(file_name);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        throw QObject::tr("Can't save file: %1").arg(file_name);
+    }
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << contents;
+}
+

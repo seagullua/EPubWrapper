@@ -104,7 +104,20 @@ private:
      */
     void cleanOutputDir();
 
+    /**
+     * @brief Copies project template to target directory
+     */
     void copyProjectTemplate();
+
+    /**
+     * @brief Create cover images for project
+     */
+    void createProjectCoverImages();
+
+    /**
+     * @brief Applies book and package name for template
+     */
+    void applyPackageAndBookName();
 };
 
 #endif // ANDROIDCOMPILE_H

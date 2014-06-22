@@ -51,7 +51,7 @@ void MainWindow::onStart()
 {
     _compiler.setAndroidSdkPath("C:\\Program Files (x86)\\Android\\android-sdk");
     _compiler.setAntPath("C:\\ant\\bin");
-    _compiler.setBookName("Мобидик Книга");
+    _compiler.setBookName(ui->bookName->text());
     _compiler.setCoverImageName("");
     _compiler.setInputEpub("E:\\downloads\\moby-dick-20120118.epub");
     _compiler.setJdkPath("C:\\Program Files\\Java\\jdk1.7.0_10\\bin");
