@@ -19,6 +19,7 @@ private slots:
     void onWarning(QString text);
     void onError(QString text);
     void onFinish(bool success, QString text);
+    void onStart();
 private:
     Ui::MainWindow *ui;
     AndroidCompile _compiler;

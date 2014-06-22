@@ -93,6 +93,19 @@ void AndroidCompile::cleanOutputDir()
     }
 }
 
+void AndroidCompile::copyProjectTemplate()
+{
+    emit logMessage(tr("Copying project template..."));
+    if(FileUtils::copyDir(_template_path, _build_dir))
+    {
+        emit logMessage(tr("Project template ready"));
+    }
+    else
+    {
+        throw QString("Copy project template failed");
+    }
+}
+
 void AndroidCompile::startCompilation()
 {
     bool success = true;
@@ -102,6 +115,7 @@ void AndroidCompile::startCompilation()
     {
         prepareEnvironment();
         prepareOutputDir();
+        copyProjectTemplate();
     }
     catch (QString error)
     {

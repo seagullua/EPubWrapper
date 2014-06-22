@@ -103,6 +103,8 @@ private:
      * @brief deletes Tmp directory
      */
     void cleanOutputDir();
+
+    void copyProjectTemplate();
 };
 
 #endif // ANDROIDCOMPILE_H

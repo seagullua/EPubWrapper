@@ -3,6 +3,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QFileInfoList>
+#include <QDebug>
+#include <QCoreApplication>
 
 bool FileUtils::removeDir(const QString &dirName)
 {
@@ -24,6 +26,36 @@ bool FileUtils::removeDir(const QString &dirName)
         }
         result = dir.rmdir(dirName);
     }
-
+    QCoreApplication::processEvents();
     return result;
+}
+
+bool FileUtils::copyDir(const QString &srcPath, const QString &dstPath)
+{
+    if(!QDir(dstPath).exists())
+    {
+        QDir parentDstDir(QFileInfo(dstPath).path());
+        if (!parentDstDir.mkdir(QFileInfo(dstPath).fileName()))
+            return false;
+    }
+
+
+    QDir srcDir(srcPath);
+    foreach(const QFileInfo &info, srcDir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
+        QString srcItemPath = QDir(srcPath).absoluteFilePath(info.fileName());
+        QString dstItemPath = QDir(dstPath).absoluteFilePath(info.fileName());
+        if (info.isDir()) {
+            if (!copyDir(srcItemPath, dstItemPath)) {
+                return false;
+            }
+        } else if (info.isFile()) {
+            if (!QFile::copy(srcItemPath, dstItemPath)) {
+                return false;
+            }
+        } else {
+            qDebug() << "Unhandled item" << info.filePath() << "in cpDir";
+        }
+    }
+    QCoreApplication::processEvents();
+    return true;
 }

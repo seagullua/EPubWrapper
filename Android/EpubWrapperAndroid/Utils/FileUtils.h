@@ -11,6 +11,8 @@ public:
      * @return
      */
     static bool removeDir(const QString &dirName);
+
+    static bool copyDir(const QString &srcPath, const QString &dstPath);
 };
 
 #endif // FILEUTILS_H

@@ -10,18 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&_compiler, SIGNAL(errorMessage(QString)), this, SLOT(onError(QString)));
     connect(&_compiler, SIGNAL(warningMessage(QString)), this, SLOT(onWarning(QString)));
     connect(&_compiler, SIGNAL(finished(bool,QString)), this, SLOT(onFinish(bool,QString)));
+    connect(ui->start, SIGNAL(clicked()), this, SLOT(onStart()));
 
-    _compiler.setAndroidSdkPath("C:\\Program Files (x86)\\Android\\android-sdk");
-    _compiler.setAntPath("C:\\ant\\bin");
-    _compiler.setBookName("Мобидик Книга");
-    _compiler.setCoverImageName("");
-    _compiler.setInputEpub("E:\\downloads\\moby-dick-20120118.epub");
-    _compiler.setJdkPath("C:\\Program Files\\Java\\jdk1.7.0_10\\bin");
-    _compiler.setOutputApkName("E:\\mobidick\\mobidick.apk");
-    _compiler.setPackageName("book.mobidick");
-    _compiler.setTemplatePath("F:\\GitHub\\Wrapper");
 
-    _compiler.startCompilation();
 }
 
 MainWindow::~MainWindow()
@@ -54,4 +45,19 @@ void MainWindow::onFinish(bool success, QString text)
     {
         ui->log->append(tr("<font color=\"red\">BUILD FAILED: %1</font>").arg(text));
     }
+}
+
+void MainWindow::onStart()
+{
+    _compiler.setAndroidSdkPath("C:\\Program Files (x86)\\Android\\android-sdk");
+    _compiler.setAntPath("C:\\ant\\bin");
+    _compiler.setBookName("Мобидик Книга");
+    _compiler.setCoverImageName("");
+    _compiler.setInputEpub("E:\\downloads\\moby-dick-20120118.epub");
+    _compiler.setJdkPath("C:\\Program Files\\Java\\jdk1.7.0_10\\bin");
+    _compiler.setOutputApkName("E:\\mobidick\\mobidick.apk");
+    _compiler.setPackageName("book.mobidick");
+    _compiler.setTemplatePath("F:\\GitHub\\Wrapper");
+
+    _compiler.startCompilation();
 }
