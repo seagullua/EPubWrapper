@@ -1,0 +1,3 @@
+[submodule "Android/external/wrapper-template"]
+	path = Android/external/wrapper-template
+	url = git@github.com:seagullua/FBReaderJ.git
