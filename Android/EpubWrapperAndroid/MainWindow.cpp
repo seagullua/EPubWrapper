@@ -54,7 +54,7 @@ void MainWindow::onStart()
     _compiler.setBookName(ui->bookName->text());
     _compiler.setCoverImageName("D:\\epubs\\test.png");
     _compiler.setInputEpub("D:\\epubs\\jane-austen-lady-susan-2.epub");
-    _compiler.setJdkPath("C:\\Program Files\\Java\\jdk1.7.0_10\\bin");
+    _compiler.setJdkPath("D:\\GitHub\\jdk-win");
     _compiler.setOutputApkName("D:\\epubs\\oustin.apk");
     _compiler.setPackageName("book.lady_susan");
     _compiler.setTemplatePath("D:\\GitHub\\EPubWrapper\\Android\\external\\wrapper-template");

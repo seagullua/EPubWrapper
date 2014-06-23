@@ -63,9 +63,10 @@ void AndroidCompile::setJdkPath(QString path)
 
 void AndroidCompile::prepareEnvironment()
 {
-    _environment = QProcessEnvironment::systemEnvironment();
+    _environment = QProcessEnvironment();
     QString PATH = _jdk_path+";"+_android_sdk_path+";"+_ant_path;
     _environment.insert("PATH", PATH);
+    _environment.insert("JAVA_HOME", _jdk_path);
     emit logMessage(tr("PATH: %1").arg(PATH));
 }
 
