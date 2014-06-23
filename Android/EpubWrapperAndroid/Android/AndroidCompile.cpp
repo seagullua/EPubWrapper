@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QDateTime>
 #include "Utils/FileUtils.h"
+#include "Utils/CreateIcon.h"
 #include <QCoreApplication>
 
 AndroidCompile::AndroidCompile()
@@ -107,9 +108,34 @@ void AndroidCompile::copyProjectTemplate()
     }
 }
 
+void AndroidCompile::createCoverImage(
+        QString icon_folder, int icon_size)
+{
+    QString icon_name = "fbreader.png";
+    QString output_name = QDir(_build_dir).absoluteFilePath(
+                QDir::toNativeSeparators("res/"+icon_folder+"/"+icon_name));
+
+    if(!CreateIcon::createSquareIcon(_cover_image_name, icon_size, output_name))
+    {
+        throw tr("Can't create cover image: %1").arg(icon_folder);
+    }
+    else
+    {
+        emit logMessage(tr("Cover image created: %1").arg(icon_folder));
+    }
+
+}
+
 void AndroidCompile::createProjectCoverImages()
 {
-    //TODO: implement
+    if(_cover_image_name.size())
+    {
+        createCoverImage("drawable-hdpi", 72);
+        createCoverImage("drawable-ldpi", 36);
+        createCoverImage("drawable-mdpi", 48);
+        createCoverImage("drawable-xhdpi", 96);
+        createCoverImage("drawable-xxhdpi", 144);
+    }
 }
 
 void AndroidCompile::copyEpub()

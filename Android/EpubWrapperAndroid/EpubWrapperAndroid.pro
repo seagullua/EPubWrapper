@@ -21,10 +21,12 @@ CONFIG(debug, debug|release) {
 SOURCES += main.cpp\
         MainWindow.cpp \
     Android/AndroidCompile.cpp \
-    Utils/FileUtils.cpp
+    Utils/FileUtils.cpp \
+    Utils/CreateIcon.cpp
 
 HEADERS  += MainWindow.h \
     Android/AndroidCompile.h \
-    Utils/FileUtils.h
+    Utils/FileUtils.h \
+    Utils/CreateIcon.h
 
 FORMS    += MainWindow.ui

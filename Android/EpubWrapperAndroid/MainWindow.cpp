@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include "Utils/CreateIcon.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&_compiler, SIGNAL(warningMessage(QString)), this, SLOT(onWarning(QString)));
     connect(&_compiler, SIGNAL(finished(bool,QString)), this, SLOT(onFinish(bool,QString)));
     connect(ui->start, SIGNAL(clicked()), this, SLOT(onStart()));
-
 
 }
 
@@ -52,12 +52,12 @@ void MainWindow::onStart()
     _compiler.setAndroidSdkPath("C:\\Program Files (x86)\\Android\\android-sdk");
     _compiler.setAntPath("C:\\ant\\bin");
     _compiler.setBookName(ui->bookName->text());
-    _compiler.setCoverImageName("");
-    _compiler.setInputEpub("E:\\downloads\\moby-dick-20120118.epub");
+    _compiler.setCoverImageName("D:\\epubs\\test.png");
+    _compiler.setInputEpub("D:\\epubs\\jane-austen-lady-susan-2.epub");
     _compiler.setJdkPath("C:\\Program Files\\Java\\jdk1.7.0_10\\bin");
-    _compiler.setOutputApkName("E:\\mobidick.apk");
-    _compiler.setPackageName("book.mobidick");
-    _compiler.setTemplatePath("F:\\GitHub\\EPubWrapper\\Android\\external\\wrapper-template");
+    _compiler.setOutputApkName("D:\\epubs\\oustin.apk");
+    _compiler.setPackageName("book.lady_susan");
+    _compiler.setTemplatePath("D:\\GitHub\\EPubWrapper\\Android\\external\\wrapper-template");
 
     _compiler.startCompilation();
 }

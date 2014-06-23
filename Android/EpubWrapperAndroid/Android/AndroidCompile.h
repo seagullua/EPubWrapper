@@ -113,6 +113,7 @@ private:
      * @brief Create cover images for project
      */
     void createProjectCoverImages();
+    void createCoverImage(QString icon_folder, int icon_size);
 
     /**
      * @brief Applies book and package name for template
