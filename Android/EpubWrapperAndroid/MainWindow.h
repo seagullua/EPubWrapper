@@ -21,6 +21,8 @@ private slots:
     void onFinish(bool success, QString text);
     void onStart();
 private:
+    QString getProjectDir(QString path);
+
     Ui::MainWindow *ui;
     AndroidCompile _compiler;
 };

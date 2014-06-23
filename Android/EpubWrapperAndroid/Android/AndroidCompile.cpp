@@ -98,6 +98,7 @@ void AndroidCompile::cleanOutputDir()
 
 void AndroidCompile::copyProjectTemplate()
 {
+    emit logMessage(tr("Template path: %1").arg(_template_path));
     emit logMessage(tr("Copying project template..."));
     if(FileUtils::copyDir(_template_path, _build_dir))
     {
