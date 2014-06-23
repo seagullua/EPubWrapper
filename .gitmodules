@@ -7,3 +7,6 @@
 [submodule "Android/external/ant"]
 	path = Android/external/ant
 	url = git@github.com:seagullua/ant-win.git
+[submodule "Android/external/android-sdk"]
+	path = Android/external/android-sdk
+	url = git@github.com:seagullua/android-sdk-win.git
