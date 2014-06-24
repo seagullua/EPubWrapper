@@ -10,3 +10,6 @@
 [submodule "Android/external/android-sdk"]
 	path = Android/external/android-sdk
 	url = git@github.com:seagullua/android-sdk-win.git
+[submodule "libraries/QuaZIP"]
+	path = libraries/QuaZIP
+	url = git@github.com:seagullua/QuaZIP.git
