@@ -3,6 +3,10 @@
 #include "Utils/CreateIcon.h"
 #include <QDebug>
 #include <QDir>
+#include "Utils/EpubInfo.h"
+#include <QDebug>
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -13,6 +17,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&_compiler, SIGNAL(warningMessage(QString)), this, SLOT(onWarning(QString)));
     connect(&_compiler, SIGNAL(finished(bool,QString)), this, SLOT(onFinish(bool,QString)));
     connect(ui->start, SIGNAL(clicked()), this, SLOT(onStart()));
+
+    EpubInfo info("E:\\downloads\\moby-dick-20120118.epub");
+    if(info.hasCover())
+    {
+        QPixmap img = info.getCover();
+        //ui->label->setPixmap(info.getCover());
+    }
 }
 
 MainWindow::~MainWindow()

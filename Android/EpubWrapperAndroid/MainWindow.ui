@@ -23,6 +23,19 @@
      </widget>
     </item>
     <item>
+     <widget class="QLabel" name="label">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>150</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QLineEdit" name="bookName">
       <property name="text">
        <string>Мобидик Книга</string>

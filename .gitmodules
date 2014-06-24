@@ -13,3 +13,6 @@
 [submodule "libraries/QuaZIP"]
 	path = libraries/QuaZIP
 	url = git@github.com:seagullua/QuaZIP.git
+[submodule "libraries/zlib"]
+	path = libraries/zlib
+	url = git@github.com:seagullua/zlib.git

@@ -3,11 +3,11 @@
 #include <QPainter>
 #include <QFile>
 bool CreateIcon::createSquareIcon(
-        QString input_file,
+        QPixmap input_file,
         int size,
         QString output_file)
 {
-    QPixmap source_scaled = QPixmap(input_file).scaled(
+    QPixmap source_scaled = input_file.scaled(
                 size,
                 size,
                 Qt::KeepAspectRatio, Qt::SmoothTransformation);
@@ -25,4 +25,13 @@ bool CreateIcon::createSquareIcon(
                  source_scaled);
     return icon.save(output_file, "PNG");
 }
+
+bool CreateIcon::createSquareIcon(
+        QString input_file,
+        int size,
+        QString output_file)
+{
+    return createSquareIcon(QPixmap(input_file), size, output_file);
+}
+
 
