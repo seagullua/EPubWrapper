@@ -57,13 +57,13 @@ void MainWindow::onFinish(bool success, QString text)
 void MainWindow::onStart()
 {
 
-    _compiler.setAndroidSdkPath("C:\\Program Files (x86)\\Android\\android-sdk");
-    _compiler.setAntPath("C:\\ant\\bin");
+    _compiler.setAndroidSdkPath(getProjectDir("external/android-sdk"));
+    _compiler.setAntPath(getProjectDir("external/ant/bin"));
     _compiler.setBookName(ui->bookName->text());
     _compiler.setCoverImageName("");
     _compiler.setInputEpub("E:\\downloads\\moby-dick-20120118.epub");
     _compiler.setJdkPath(getProjectDir("external/jdk"));
-    _compiler.setOutputApkName("E:\\mobidick\\mobidick.apk");
+    _compiler.setOutputApkName("E:\\mobidick.apk");
     _compiler.setPackageName("book.lady_susan");
     _compiler.setTemplatePath(getProjectDir("external/wrapper-template"));
 
