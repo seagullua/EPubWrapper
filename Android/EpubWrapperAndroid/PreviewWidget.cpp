@@ -13,7 +13,7 @@ PreviewWidget::PreviewWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //connect(ui->convert, SIGNAL(clicked()), this, SLOT(onStart()));
+    connect(ui->convert, SIGNAL(clicked()), this, SIGNAL(startConversion()));
 
     ui->coverPreview->setMinimumSize(COVER_PREVIEW);
 
@@ -21,16 +21,9 @@ PreviewWidget::PreviewWidget(QWidget *parent) :
 
 }
 
-void PreviewWidget::selectEpub(QString epub_file)
+void PreviewWidget::selectEpub(const EpubInfo& info)
 {
-    EpubInfo info(epub_file);
-    if(!info.isValidEpub())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("This is not a valid EPub file"));
-        return;
-    }
-
-    _epub_file = epub_file;
+    _epub_file = info.getFileName();
 
     _has_cover = false;
     if(info.hasCover())
@@ -48,7 +41,7 @@ void PreviewWidget::selectEpub(QString epub_file)
     {
         ui->coverImageFile->setText(tr("(no cover)"));
     }
-    ui->saveToPath->setText(epub_file+".apk");
+    ui->saveToPath->setText(_epub_file+".apk");
 }
 
 void PreviewWidget::updatePackageName(QString new_name)

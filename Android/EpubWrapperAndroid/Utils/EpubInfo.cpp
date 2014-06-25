@@ -113,13 +113,18 @@ QPixmap EpubInfo::getCover() const
     return _cover_image;
 }
 
+QString EpubInfo::getFileName() const
+{
+    return _file_name;
+}
 bool EpubInfo::isValidEpub() const
 {
     return _is_valid_epub;
 }
 EpubInfo::EpubInfo(QString file_name)
     : _has_cover(false),
-      _is_valid_epub(true)
+      _is_valid_epub(true),
+      _file_name(file_name)
 {
     QuaZip zip(file_name);
     zip.open(QuaZip::mdUnzip);

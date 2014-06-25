@@ -23,6 +23,21 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
+     <widget class="IndexWidget" name="formIndex" native="true"/>
+    </item>
+    <item>
+     <widget class="PreviewWidget" name="formPreview" native="true"/>
+    </item>
+    <item>
+     <widget class="ConversionWidget" name="formCoversion" native="true"/>
+    </item>
+    <item>
+     <widget class="SuccessWidget" name="formSuccess" native="true"/>
+    </item>
+    <item>
+     <widget class="FailedWidget" name="formFailed" native="true"/>
+    </item>
+    <item>
      <widget class="QLabel" name="label">
       <property name="text">
        <string>© 2014 Andrii Chaika, Diana Sirenko</string>
@@ -32,9 +47,46 @@
    </layout>
    <zorder>verticalSpacer_9</zorder>
    <zorder>label</zorder>
+   <zorder>formIndex</zorder>
+   <zorder>formPreview</zorder>
+   <zorder>formCoversion</zorder>
+   <zorder>formSuccess</zorder>
+   <zorder>formFailed</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>IndexWidget</class>
+   <extends>QWidget</extends>
+   <header>IndexWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PreviewWidget</class>
+   <extends>QWidget</extends>
+   <header>PreviewWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ConversionWidget</class>
+   <extends>QWidget</extends>
+   <header>ConversionWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SuccessWidget</class>
+   <extends>QWidget</extends>
+   <header>SuccessWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FailedWidget</class>
+   <extends>QWidget</extends>
+   <header>FailedWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
