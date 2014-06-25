@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QString>
 #include <QProcessEnvironment>
+#include <QPixmap>
 
 class AndroidCompile : public QObject
 {
@@ -56,7 +57,7 @@ public:
      * @brief The name of image with cover
      * @param path
      */
-    void setCoverImageName(QString path);
+    void setCoverImage(QPixmap image);
 
     /**
      * @brief Starts compilation proccess
@@ -79,7 +80,8 @@ private:
     QString _output_apk_name;
     QString _ant_path;
     QString _input_epub_name;
-    QString _cover_image_name;
+    QPixmap _cover_image;
+    bool _default_cover;
     QString _jdk_path;
 
     QString _package_name;

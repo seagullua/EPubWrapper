@@ -6,6 +6,7 @@
 #include <QCoreApplication>
 
 AndroidCompile::AndroidCompile()
+    : _default_cover(true)
 {
 
 }
@@ -51,9 +52,10 @@ void AndroidCompile::setInputEpub(QString path)
 }
 
 
-void AndroidCompile::setCoverImageName(QString path)
+void AndroidCompile::setCoverImage(QPixmap img)
 {
-    _cover_image_name = path;
+    _cover_image = img;
+    _default_cover = false;
 }
 
 void AndroidCompile::setJdkPath(QString path)
@@ -117,7 +119,7 @@ void AndroidCompile::createCoverImage(
     QString output_name = QDir(_build_dir).absoluteFilePath(
                 QDir::toNativeSeparators("res/"+icon_folder+"/"+icon_name));
 
-    if(!CreateIcon::createSquareIcon(_cover_image_name, icon_size, output_name))
+    if(!CreateIcon::createSquareIcon(_cover_image, icon_size, output_name))
     {
         throw tr("Can't create cover image: %1").arg(icon_folder);
     }
@@ -130,7 +132,7 @@ void AndroidCompile::createCoverImage(
 
 void AndroidCompile::createProjectCoverImages()
 {
-    if(_cover_image_name.size())
+    if(!_default_cover)
     {
         createCoverImage("drawable-hdpi", 72);
         createCoverImage("drawable-ldpi", 36);

@@ -21,7 +21,10 @@ private slots:
     void onFinish(bool success, QString text);
     void onStart();
 private:
+    void selectEpub(QString epub_file);
+
     QString getProjectDir(QString path);
+    QString _epub_file;
     QPixmap _cover;
     bool _has_cover;
     Ui::MainWindow *ui;
