@@ -4,12 +4,22 @@
 #include <QString>
 #include <QProcessEnvironment>
 #include <QPixmap>
+#include <QThread>
 
 class AndroidCompile : public QObject
 {
     Q_OBJECT
+public slots:
+    /**
+     * @brief Starts compilation proccess
+     */
+    void startCompilation();
+    void startCompilationAsync();
 public:
     AndroidCompile();
+
+    void cancel();
+    void waitUntilCanceled();
 
     /**
      * @brief Path where template of Android project is located
@@ -59,10 +69,7 @@ public:
      */
     void setCoverImage(QPixmap image);
 
-    /**
-     * @brief Starts compilation proccess
-     */
-    void startCompilation();
+
 
     /**
      * @brief Java Development Kit path
@@ -75,17 +82,20 @@ signals:
     void errorMessage(QString message);
     void finished(bool success, QString text);
 private:
+    bool _terminate;
     QString _template_path;
     QString _android_sdk_path;
     QString _output_apk_name;
     QString _ant_path;
     QString _input_epub_name;
-    QPixmap _cover_image;
+    QImage _cover_image;
     bool _default_cover;
+    bool _is_running;
     QString _jdk_path;
 
     QString _package_name;
     QString _book_name;
+    int _steps_made;
 
     //Internal
     QString _build_dir;
@@ -125,6 +135,9 @@ private:
     void copyEpub();
     void buildApk();
     void copyFinalApk();
+    void stepFinished();
+
+    QThread _thread;
 };
 
 #endif // ANDROIDCOMPILE_H

@@ -5,12 +5,24 @@
 #include "Utils/CreateIcon.h"
 #include <QCoreApplication>
 
+static int STEPS = 9;
+
 AndroidCompile::AndroidCompile()
-    : _default_cover(true)
+    : _default_cover(true),
+      _terminate(false)
 {
 
 }
+void AndroidCompile::waitUntilCanceled()
+{
+    if(!_thread.isFinished())
+        _thread.wait();
+}
 
+void AndroidCompile::cancel()
+{
+    _terminate = true;
+}
 
 void AndroidCompile::setTemplatePath(QString path)
 {
@@ -54,7 +66,7 @@ void AndroidCompile::setInputEpub(QString path)
 
 void AndroidCompile::setCoverImage(QPixmap img)
 {
-    _cover_image = img;
+    _cover_image = img.toImage();
     _default_cover = false;
 }
 
@@ -180,6 +192,13 @@ void AndroidCompile::buildApk()
         QByteArray data = process.readAll();
         emit logMessage(data.data());
         QCoreApplication::processEvents();
+
+        if(_terminate)
+        {
+            process.terminate();
+            return;
+            //throw tr("Canceled by user");
+        }
     }
 
     process.waitForFinished();
@@ -252,22 +271,54 @@ void AndroidCompile::applyPackageAndBookName()
         FileUtils::writeFileContents(prop_file, QString("sdk.dir=%1").arg(QDir::fromNativeSeparators(_android_sdk_path)));
     }
 }
+void AndroidCompile::stepFinished()
+{
+    if(_terminate)
+    {
+        throw tr("Canceled by user");
+    }
+    _steps_made++;
+    emit progress(_steps_made, STEPS);
+}
+void AndroidCompile::startCompilationAsync()
+{
+    connect(&_thread, SIGNAL(started()), this, SLOT(startCompilation()));
+
+    this->moveToThread(&_thread);
+    _thread.start();
+}
 
 void AndroidCompile::startCompilation()
 {
+    _steps_made = 0;
     bool success = true;
     QString result_text = "";
-
+    emit progress(0, STEPS);
     try
     {
         prepareEnvironment();
+        stepFinished();
+
         prepareOutputDir();
+        stepFinished();
+
         copyProjectTemplate();
+        stepFinished();
+
         createProjectCoverImages();
+        stepFinished();
+
         applyPackageAndBookName();
+        stepFinished();
+
         copyEpub();
+        stepFinished();
+
         buildApk();
+        stepFinished();
+
         copyFinalApk();
+        stepFinished();
     }
     catch (QString error)
     {
@@ -276,8 +327,11 @@ void AndroidCompile::startCompilation()
     }
 
     cleanOutputDir();
+    emit progress(STEPS, STEPS);
 
     emit finished(success, result_text);
+
+    _thread.quit();
 }
 
 

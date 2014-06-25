@@ -15,11 +15,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(&_compiler, SIGNAL(logMessage(QString)), this, SLOT(onLog(QString)));
-    connect(&_compiler, SIGNAL(errorMessage(QString)), this, SLOT(onError(QString)));
-    connect(&_compiler, SIGNAL(warningMessage(QString)), this, SLOT(onWarning(QString)));
-    connect(&_compiler, SIGNAL(finished(bool,QString)), this, SLOT(onFinish(bool,QString)));
-    //connect(ui->start, SIGNAL(clicked()), this, SLOT(onStart()));
+
+    connect(ui->convert, SIGNAL(clicked()), this, SLOT(onStart()));
+    connect(ui->cancelCompilation, SIGNAL(clicked()), this, SLOT(cancelRunningTask()));
+
     ui->coverPreview->setMinimumSize(COVER_PREVIEW);
     this->setWindowTitle(APPLICATION_NAME);
 
@@ -44,36 +43,49 @@ void MainWindow::updatePackageName(QString new_name)
 {
     QString book_name = new_name;
     QString latin = Naming::createLatinName(book_name);
-    //qDebug() << book_name << latin;
     QString package_name = "book." + Naming::forPackageName(latin);
     ui->androidPackage->setText(package_name);
 }
 
 void MainWindow::onLog(QString text)
 {
-    //ui->log->append(text);
+    ui->log->append(QString("<font color=\"black\">%1</font>").arg(text));
 }
 
 void MainWindow::onWarning(QString text)
 {
-    //ui->log->append(QString("<font color=\"#e9db00\">%1</font>").arg(text));
+    ui->log->append(QString("<font color=\"#e9db00\">%1</font>").arg(text));
 }
 
 void MainWindow::onError(QString text)
 {
-    //ui->log->append(QString("<font color=\"red\">%1</font>").arg(text));
+    ui->log->append(QString("<font color=\"red\">%1</font>").arg(text));
 }
 
 void MainWindow::onFinish(bool success, QString text)
 {
     if(success)
     {
-        //ui->log->append(tr("<font color=\"green\">BUILD SUCCESSFULL</font>"));
+        ui->log->append(tr("<font color=\"green\">BUILD SUCCESSFULL</font>"));
     }
     else
     {
-        //ui->log->append(tr("<font color=\"red\">BUILD FAILED: %1</font>").arg(text));
+        ui->log->append(tr("<font color=\"red\">BUILD FAILED: %1</font>").arg(text));
     }
+}
+
+void MainWindow::cancelRunningTask()
+{
+    if(!_compiler.isNull())
+    {
+        _compiler->cancel();
+    }
+}
+
+void MainWindow::onProgress(int steps_made, int steps)
+{
+    ui->compileProgress->setMaximum(steps);
+    ui->compileProgress->setValue(steps_made);
 }
 
 void MainWindow::selectEpub(QString epub_file)
@@ -102,20 +114,39 @@ void MainWindow::selectEpub(QString epub_file)
 
 void MainWindow::onStart()
 {
+    ui->log->clear();
+    //QThreadPtr thread(new QThread);
+    AndroidCompilePtr compiler(new AndroidCompile);
+    //_thread = QThreadPtr(new QThread);
+    connect(&*compiler, SIGNAL(logMessage(QString)), this, SLOT(onLog(QString)));
+    connect(&*compiler, SIGNAL(errorMessage(QString)), this, SLOT(onError(QString)));
+    connect(&*compiler, SIGNAL(warningMessage(QString)), this, SLOT(onWarning(QString)));
+    connect(&*compiler, SIGNAL(finished(bool,QString)), this, SLOT(onFinish(bool,QString)));
 
-    _compiler.setAndroidSdkPath(getProjectDir("external/android-sdk"));
-    _compiler.setAntPath(getProjectDir("external/ant/bin"));
-    _compiler.setBookName(ui->bookName->text());
+    connect(&*compiler, SIGNAL(progress(int,int)), this, SLOT(onProgress(int,int)));
+    //connect(&*thread, SIGNAL(started()), &*compiler, SLOT(startCompilation()));
+
+
+    compiler->setAndroidSdkPath(getProjectDir("external/android-sdk"));
+    compiler->setAntPath(getProjectDir("external/ant/bin"));
+    compiler->setBookName(ui->bookName->text());
     if(_has_cover)
     {
-        _compiler.setCoverImage(_cover);
+        compiler->setCoverImage(_cover);
     }
 
-    _compiler.setInputEpub(_epub_file);
-    _compiler.setJdkPath(getProjectDir("external/jdk"));
-    _compiler.setOutputApkName(ui->saveToPath->text());
-    _compiler.setPackageName(ui->androidPackage->text());
-    _compiler.setTemplatePath(getProjectDir("external/wrapper-template"));
+    compiler->setInputEpub(_epub_file);
+    compiler->setJdkPath(getProjectDir("external/jdk"));
+    compiler->setOutputApkName(ui->saveToPath->text());
+    compiler->setPackageName(ui->androidPackage->text());
+    compiler->setTemplatePath(getProjectDir("external/wrapper-template"));
 
-    _compiler.startCompilation();
+    compiler->startCompilationAsync();
+
+    if(!_compiler.isNull())
+    {
+        _compiler->cancel();
+        _compiler->waitUntilCanceled();
+    }
+    _compiler = compiler;
 }
