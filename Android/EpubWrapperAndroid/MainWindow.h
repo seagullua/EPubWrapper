@@ -22,7 +22,8 @@ private slots:
     void onStart();
 private:
     QString getProjectDir(QString path);
-
+    QPixmap _cover;
+    bool _has_cover;
     Ui::MainWindow *ui;
     AndroidCompile _compiler;
 };

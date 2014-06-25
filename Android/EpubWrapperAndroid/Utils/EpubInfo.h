@@ -11,9 +11,11 @@ public:
     QPixmap getCover() const;
 private:
     QString _file_name;
-    QByteArray _cover;
+    bool _has_cover;
+    //QByteArray _cover;
     QString _cover_type;
     QString _book_title;
+    QPixmap _cover_image;
 };
 
 #endif // EPUBINFO_H

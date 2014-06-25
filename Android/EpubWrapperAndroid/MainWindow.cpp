@@ -18,11 +18,16 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&_compiler, SIGNAL(finished(bool,QString)), this, SLOT(onFinish(bool,QString)));
     connect(ui->start, SIGNAL(clicked()), this, SLOT(onStart()));
 
-    EpubInfo info("E:\\downloads\\moby-dick-20120118.epub");
+    EpubInfo info("D:\\epubs\\Pamyatnaya progulka.epub");
+    _has_cover = false;
     if(info.hasCover())
     {
-        QPixmap img = info.getCover();
-        //ui->label->setPixmap(info.getCover());
+        ui->bookName->setText(info.getBookName());
+        _has_cover = true;
+        _cover = info.getCover();
+        QPixmap thumb = _cover.scaled(ui->label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        ui->label->setPixmap(thumb);
     }
 }
 
