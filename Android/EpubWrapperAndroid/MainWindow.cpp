@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QDir>
 #include "Utils/EpubInfo.h"
+#include "Utils/Naming.h"
 #include <QDebug>
 
 static const QSize COVER_PREVIEW(150, 200);
@@ -21,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect(ui->start, SIGNAL(clicked()), this, SLOT(onStart()));
     ui->coverPreview->setMinimumSize(COVER_PREVIEW);
     this->setWindowTitle(APPLICATION_NAME);
+
+    connect(ui->bookName, SIGNAL(textChanged(QString)), this, SLOT(updatePackageName(QString)));
+
     selectEpub("D:\\epubs\\ostrov_sokrovish_.epub");
 }
 
@@ -34,6 +38,15 @@ QString MainWindow::getProjectDir(QString path)
     QString input = QDir::toNativeSeparators(path);
     QString res = QDir(input).absolutePath();
     return res;
+}
+
+void MainWindow::updatePackageName(QString new_name)
+{
+    QString book_name = new_name;
+    QString latin = Naming::createLatinName(book_name);
+    //qDebug() << book_name << latin;
+    QString package_name = "book." + Naming::forPackageName(latin);
+    ui->androidPackage->setText(package_name);
 }
 
 void MainWindow::onLog(QString text)
@@ -78,7 +91,13 @@ void MainWindow::selectEpub(QString epub_file)
 
         //qDebug() << ui->coverPreview->size();
         ui->coverPreview->setPixmap(thumb);
+        ui->coverImageFile->setText(tr("(default)"));
     }
+    else
+    {
+        ui->coverImageFile->setText(tr("(no cover)"));
+    }
+    ui->saveToPath->setText(epub_file+".apk");
 }
 
 void MainWindow::onStart()

@@ -52,7 +52,8 @@ SOURCES += main.cpp\
     ../../libraries/zlib/deflate.c \
     ../../libraries/zlib/crc32.c \
     ../../libraries/zlib/compress.c \
-    ../../libraries/zlib/adler32.c
+    ../../libraries/zlib/adler32.c \
+    Utils/Naming.cpp
 
 HEADERS  += MainWindow.h \
     Android/AndroidCompile.h \
@@ -85,6 +86,7 @@ HEADERS  += MainWindow.h \
     ../../libraries/zlib/inffast.h \
     ../../libraries/zlib/gzguts.h \
     ../../libraries/zlib/deflate.h \
-    ../../libraries/zlib/crc32.h
+    ../../libraries/zlib/crc32.h \
+    Utils/Naming.h
 
 FORMS    += MainWindow.ui

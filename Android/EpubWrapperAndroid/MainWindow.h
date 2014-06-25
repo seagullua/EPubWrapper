@@ -20,8 +20,10 @@ private slots:
     void onError(QString text);
     void onFinish(bool success, QString text);
     void onStart();
+    void updatePackageName(QString new_name);
 private:
     void selectEpub(QString epub_file);
+
 
     QString getProjectDir(QString path);
     QString _epub_file;
