@@ -76,6 +76,10 @@ void ConversionWidget::showLog()
     ui->conversionShowLog->setVisible(false);
 }
 
+QString ConversionWidget::getLog() const
+{
+    return ui->log->toHtml();
+}
 void ConversionWidget::startConversion()
 {
     ui->log->clear();

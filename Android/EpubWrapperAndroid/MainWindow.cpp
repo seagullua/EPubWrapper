@@ -84,10 +84,14 @@ void MainWindow::conversionFinished(bool success, QString error)
 {
     if(success)
     {
+        ui->formSuccess->setBookName(ui->formPreview->getBookName());
         switchTo(FormSuccess);
     }
     else
     {
+        ui->formFailed->setBookName(ui->formPreview->getBookName());
+        ui->formFailed->setError(error);
+        ui->formFailed->setLog(ui->formCoversion->getLog());
         switchTo(FormFailed);
     }
 }

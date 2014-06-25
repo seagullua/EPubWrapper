@@ -27,6 +27,7 @@ public:
     void setOutputPath(QString output);
     void useDefaultImage();
     void startConversion();
+    QString getLog() const;
 private slots:
     void onLog(QString text);
     void onWarning(QString text);
