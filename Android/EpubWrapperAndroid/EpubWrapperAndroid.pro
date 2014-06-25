@@ -53,7 +53,12 @@ SOURCES += main.cpp\
     ../../libraries/zlib/crc32.c \
     ../../libraries/zlib/compress.c \
     ../../libraries/zlib/adler32.c \
-    Utils/Naming.cpp
+    Utils/Naming.cpp \
+    IndexWidget.cpp \
+    PreviewWidget.cpp \
+    SuccessWidget.cpp \
+    FailedWidget.cpp \
+    ConversionWidget.cpp
 
 HEADERS  += MainWindow.h \
     Android/AndroidCompile.h \
@@ -87,6 +92,16 @@ HEADERS  += MainWindow.h \
     ../../libraries/zlib/gzguts.h \
     ../../libraries/zlib/deflate.h \
     ../../libraries/zlib/crc32.h \
-    Utils/Naming.h
+    Utils/Naming.h \
+    IndexWidget.h \
+    PreviewWidget.h \
+    SuccessWidget.h \
+    FailedWidget.h \
+    ConversionWidget.h
 
-FORMS    += MainWindow.ui
+FORMS    += MainWindow.ui \
+    IndexWidget.ui \
+    PreviewWidget.ui \
+    SuccessWidget.ui \
+    FailedWidget.ui \
+    ConversionWidget.ui

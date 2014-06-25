@@ -113,9 +113,13 @@ QPixmap EpubInfo::getCover() const
     return _cover_image;
 }
 
-
+bool EpubInfo::isValidEpub() const
+{
+    return _is_valid_epub;
+}
 EpubInfo::EpubInfo(QString file_name)
-    : _has_cover(false)
+    : _has_cover(false),
+      _is_valid_epub(true)
 {
     QuaZip zip(file_name);
     zip.open(QuaZip::mdUnzip);
@@ -126,6 +130,12 @@ EpubInfo::EpubInfo(QString file_name)
 
     //TODO: apply path for cover
     QString cover_name = getFirstImage(package, _cover_type);
+
+    if(package_file.size() == 0)
+    {
+        _is_valid_epub = false;
+        return;
+    }
 
     QString resources_dir = package_file.mid(0, package_file.size() -
                                              QDir(package_file).dirName().size());

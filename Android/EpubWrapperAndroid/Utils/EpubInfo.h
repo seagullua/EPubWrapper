@@ -9,9 +9,11 @@ public:
     QString getBookName() const;
     bool hasCover() const;
     QPixmap getCover() const;
+    bool isValidEpub() const;
 private:
     QString _file_name;
     bool _has_cover;
+    bool _is_valid_epub;
     //QByteArray _cover;
     QString _cover_type;
     QString _book_title;
