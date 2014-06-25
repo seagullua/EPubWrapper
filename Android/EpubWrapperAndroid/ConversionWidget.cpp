@@ -1,6 +1,7 @@
 #include "ConversionWidget.h"
 #include "ui_ConversionWidget.h"
 #include <QDir>
+#include <QScrollBar>
 
 
 ConversionWidget::ConversionWidget(QWidget *parent) :
@@ -8,21 +9,22 @@ ConversionWidget::ConversionWidget(QWidget *parent) :
     ui(new Ui::ConversionWidget)
 {
     ui->setupUi(this);
+    connect(ui->conversionShowLog, SIGNAL(clicked()), this, SLOT(showLog()));
 }
 
 void ConversionWidget::onLog(QString text)
 {
-    ui->log->append(QString("<font color=\"black\">%1</font>").arg(text));
+    ui->log->append(QString("<font color=\"black\"><pre>%1</pre></font>").arg(text));
 }
 
 void ConversionWidget::onWarning(QString text)
 {
-    ui->log->append(QString("<font color=\"#e9db00\">%1</font>").arg(text));
+    ui->log->append(QString("<font color=\"orange\"><pre>%1</pre></font>").arg(text));
 }
 
 void ConversionWidget::onError(QString text)
 {
-    ui->log->append(QString("<font color=\"red\">%1</font>").arg(text));
+    ui->log->append(QString("<font color=\"red\"><pre>%1</pre></font>").arg(text));
 }
 
 void ConversionWidget::onFinish(bool success, QString text)
@@ -66,17 +68,26 @@ void ConversionWidget::useDefaultImage()
 {
     _has_cover = false;
 }
+void ConversionWidget::showLog()
+{
+    ui->log->setVisible(true);
+    ui->log->verticalScrollBar()->setValue(ui->log->verticalScrollBar()->maximum());
+    ui->log->horizontalScrollBar()->setValue(ui->log->horizontalScrollBar()->minimum());
+    ui->conversionShowLog->setVisible(false);
+}
 
 void ConversionWidget::startConversion()
 {
     ui->log->clear();
+    ui->log->setVisible(false);
+    ui->conversionShowLog->setVisible(true);
     AndroidCompilePtr compiler(new AndroidCompile);
 
     connect(&*compiler, SIGNAL(logMessage(QString)), this, SLOT(onLog(QString)));
     connect(&*compiler, SIGNAL(errorMessage(QString)), this, SLOT(onError(QString)));
     connect(&*compiler, SIGNAL(warningMessage(QString)), this, SLOT(onWarning(QString)));
     connect(&*compiler, SIGNAL(finished(bool,QString)), this, SLOT(onFinish(bool,QString)));
-
+    connect(&*compiler, SIGNAL(finished(bool,QString)), this, SIGNAL(finished(bool,QString)));
     connect(&*compiler, SIGNAL(progress(int,int)), this, SLOT(onProgress(int,int)));
 
 

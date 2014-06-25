@@ -14,7 +14,8 @@ class ConversionWidget;
 class ConversionWidget : public QWidget
 {
     Q_OBJECT
-    
+signals:
+    void finished(bool success, QString text);
 public:
     explicit ConversionWidget(QWidget *parent = 0);
     ~ConversionWidget();
@@ -25,14 +26,15 @@ public:
     void setInputEpub(QString epub);
     void setOutputPath(QString output);
     void useDefaultImage();
-
+    void startConversion();
 private slots:
     void onLog(QString text);
     void onWarning(QString text);
     void onError(QString text);
     void onFinish(bool success, QString text);
-    void startConversion();
+
     void onProgress(int steps_made, int steps);
+    void showLog();
 private:
     QString _epub_file;
     QString _book_name;

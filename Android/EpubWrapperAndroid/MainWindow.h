@@ -25,9 +25,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 private slots:
+    void startConversion();
+    void conversionFinished(bool success, QString error);
+    void openApkInFolder();
+    void newEpub();
+    void tryAgain();
 private:
     void switchTo(const Form);
     void selectEpub(QString epub_file);
+
 
     typedef QMap<Form, QWidget*> FormsMap;
 

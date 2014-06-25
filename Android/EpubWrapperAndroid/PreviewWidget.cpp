@@ -21,6 +21,31 @@ PreviewWidget::PreviewWidget(QWidget *parent) :
 
 }
 
+bool PreviewWidget::hasCover() const
+{
+    return _has_cover;
+}
+QPixmap PreviewWidget::getCover() const
+{
+    return _cover;
+}
+QString PreviewWidget::getEpubFile() const
+{
+    return _epub_file;
+}
+QString PreviewWidget::getOutputPath() const
+{
+    return ui->saveToPath->text();
+}
+QString PreviewWidget::getBookName() const
+{
+    return ui->bookName->text();
+}
+QString PreviewWidget::getPackageName() const
+{
+    return ui->androidPackage->text();
+}
+
 void PreviewWidget::selectEpub(const EpubInfo& info)
 {
     _epub_file = info.getFileName();

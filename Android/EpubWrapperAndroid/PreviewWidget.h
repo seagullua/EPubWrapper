@@ -16,6 +16,12 @@ public:
     explicit PreviewWidget(QWidget *parent = 0);
     ~PreviewWidget();
     void selectEpub(const EpubInfo& info);
+    bool hasCover() const;
+    QPixmap getCover() const;
+    QString getEpubFile() const;
+    QString getOutputPath() const;
+    QString getBookName() const;
+    QString getPackageName() const;
 private slots:
     void updatePackageName(QString new_name);
 private:

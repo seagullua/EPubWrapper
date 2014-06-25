@@ -12,6 +12,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(ui->formPreview, SIGNAL(startConversion()), this, SLOT(startConversion()));
+    connect(ui->formCoversion, SIGNAL(finished(bool,QString)), this, SLOT(conversionFinished(bool,QString)));
+    connect(ui->formFailed, SIGNAL(tryAgain()), this, SLOT(tryAgain()));
+    connect(ui->formSuccess, SIGNAL(newEpub()), this, SLOT(newEpub()));
+    connect(ui->formSuccess, SIGNAL(openFolder()), this, SLOT(openApkInFolder()));
+
     _forms[FormConversion] = ui->formCoversion;
     _forms[FormFailed] = ui->formFailed;
     _forms[FormIndex] = ui->formIndex;
@@ -44,14 +50,27 @@ void MainWindow::switchTo(const Form f)
 
 }
 
+void MainWindow::openApkInFolder()
+{
+    qDebug() << "Open in folder";
+}
 
+void MainWindow::newEpub()
+{
+    qDebug() << "New epub";
+}
+
+void MainWindow::tryAgain()
+{
+    startConversion();
+}
 
 void MainWindow::selectEpub(QString epub_file)
 {
     EpubInfo info(epub_file);
     if(!info.isValidEpub())
     {
-        QMessageBox::critical(this, tr("Error"), tr("This is not a valid EPub file"));
+        QMessageBox::critical(this, tr("Error"), tr("This is not a valid EPub file. Please select another file"));
         return;
     }
     this->setWindowTitle(APPLICATION_NAME + " - " + epub_file);
@@ -60,4 +79,39 @@ void MainWindow::selectEpub(QString epub_file)
     switchTo(FormPreview);
 }
 
+
+void MainWindow::conversionFinished(bool success, QString error)
+{
+    if(success)
+    {
+        switchTo(FormSuccess);
+    }
+    else
+    {
+        switchTo(FormFailed);
+    }
+}
+
+void MainWindow::startConversion()
+{
+    PreviewWidget* preview = ui->formPreview;
+    ConversionWidget* conversion = ui->formCoversion;
+
+    if(preview->hasCover())
+    {
+        conversion->setImage(preview->getCover());
+    }
+    else
+    {
+        conversion->useDefaultImage();
+    }
+
+    conversion->setBookName(preview->getBookName());
+    conversion->setInputEpub(preview->getEpubFile());
+    conversion->setPackageName(preview->getPackageName());
+    conversion->setOutputPath(preview->getOutputPath());
+
+    conversion->startConversion();
+    switchTo(FormConversion);
+}
 
