@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include "Utils/EpubInfo.h"
 #include "Utils/Naming.h"
+#include <QFileDialog>
 
 static const QSize COVER_PREVIEW(150, 200);
 
@@ -18,7 +19,8 @@ PreviewWidget::PreviewWidget(QWidget *parent) :
     ui->coverPreview->setMinimumSize(COVER_PREVIEW);
 
     connect(ui->bookName, SIGNAL(textChanged(QString)), this, SLOT(updatePackageName(QString)));
-
+    connect(ui->selectCoverImage, SIGNAL(clicked()), this, SLOT(selectCover()));
+    connect(ui->selectSaveTo, SIGNAL(clicked()), this, SLOT(saveTo()));
 }
 
 bool PreviewWidget::hasCover() const
@@ -46,6 +48,16 @@ QString PreviewWidget::getPackageName() const
     return ui->androidPackage->text();
 }
 
+void PreviewWidget::setCover(QPixmap p)
+{
+    _has_cover = true;
+    _cover = p;
+    QPixmap thumb = _cover.scaled(
+                COVER_PREVIEW, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    ui->coverPreview->setPixmap(thumb);
+}
+
 void PreviewWidget::selectEpub(const EpubInfo& info)
 {
     _epub_file = info.getFileName();
@@ -54,12 +66,7 @@ void PreviewWidget::selectEpub(const EpubInfo& info)
     if(info.hasCover())
     {
         ui->bookName->setText(info.getBookName());
-        _has_cover = true;
-        _cover = info.getCover();
-        QPixmap thumb = _cover.scaled(COVER_PREVIEW, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-        //qDebug() << ui->coverPreview->size();
-        ui->coverPreview->setPixmap(thumb);
+        setCover(info.getCover());
         ui->coverImageFile->setText(tr("(default)"));
     }
     else
@@ -75,6 +82,33 @@ void PreviewWidget::updatePackageName(QString new_name)
     QString latin = Naming::createLatinName(book_name);
     QString package_name = "book." + Naming::forPackageName(latin);
     ui->androidPackage->setText(package_name);
+}
+
+void PreviewWidget::selectCover()
+{
+    QString file_name = QFileDialog::getOpenFileName(this, tr("Choose Cover"),
+                                                     "",
+                                                     tr("Images (*.png *.jpg *.jpeg)"));
+
+    QPixmap img;
+    if(img.load(file_name))
+    {
+        setCover(img);
+        ui->coverImageFile->setText(file_name);
+
+    }
+
+}
+
+void PreviewWidget::saveTo()
+{
+    QString file_name = QFileDialog::getSaveFileName(this, tr("Save APK"),
+                                                     ui->saveToPath->text(),
+                                                     tr("Android APK (*.apk)"));
+    if(file_name.size() > 0)
+    {
+        ui->saveToPath->setText(file_name);
+    }
 }
 
 PreviewWidget::~PreviewWidget()

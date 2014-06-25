@@ -24,8 +24,10 @@ public:
     QString getPackageName() const;
 private slots:
     void updatePackageName(QString new_name);
+    void selectCover();
+    void saveTo();
 private:
-
+    void setCover(QPixmap);
     QString _epub_file;
     bool _has_cover;
     QPixmap _cover;

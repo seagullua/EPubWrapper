@@ -302,7 +302,7 @@ void AndroidCompile::startCompilation()
         prepareOutputDir();
         stepFinished();
 
-        throw tr("Test fail");
+        //throw tr("Test fail");
 
         copyProjectTemplate();
         stepFinished();
