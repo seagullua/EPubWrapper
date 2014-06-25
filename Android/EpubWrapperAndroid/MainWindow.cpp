@@ -3,6 +3,8 @@
 #include <QDebug>
 #include "Utils/EpubInfo.h"
 #include <QMessageBox>
+#include <QFileInfo>
+#include <QDir>
 
 static const QString APPLICATION_NAME(QObject::tr("EPub To APK"));
 
@@ -52,12 +54,15 @@ void MainWindow::switchTo(const Form f)
 
 void MainWindow::openApkInFolder()
 {
-    qDebug() << "Open in folder";
+    openInExplorer(ui->formPreview->getOutputPath());
 }
 
 void MainWindow::newEpub()
 {
-    qDebug() << "New epub";
+    QString current_exe = QCoreApplication::applicationFilePath();
+    QProcess process;
+    bool is_ok = process.startDetached(QString("\"%1\"").arg(current_exe));
+    qDebug() << "Run new: " << is_ok;
 }
 
 void MainWindow::tryAgain()
@@ -79,6 +84,14 @@ void MainWindow::selectEpub(QString epub_file)
     switchTo(FormPreview);
 }
 
+void MainWindow::openInExplorer(QString file)
+{
+    QString param;
+    if (!QFileInfo(file).isDir())
+        param = QLatin1String("/select,");
+    param += QDir::toNativeSeparators(file);
+    QProcess::startDetached("explorer.exe", QStringList(param));
+}
 
 void MainWindow::conversionFinished(bool success, QString error)
 {

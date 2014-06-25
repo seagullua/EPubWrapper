@@ -34,7 +34,7 @@ private:
     void switchTo(const Form);
     void selectEpub(QString epub_file);
 
-
+    void openInExplorer(QString file);
     typedef QMap<Form, QWidget*> FormsMap;
 
     FormsMap _forms;
