@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QFileDialog>
+#include <QSettings>
 
 static const QString APPLICATION_NAME(QObject::tr("ePUB to APK"));
 
@@ -36,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     if(arguments.size() >= 2)
     {
         QString file_name = arguments.at(1);
+
         selectEpub(file_name);
     }
 
@@ -152,5 +154,35 @@ void MainWindow::startConversion()
 
     conversion->startConversion();
     switchTo(FormConversion);
+}
+
+void MainWindow::registerQuickAction()
+{
+    QString exe_name = QCoreApplication::applicationFilePath();
+    exe_name = exe_name.replace("/", "\\");
+    QString fileExtension = ".epub";
+    QString action_name = "ePUB to APK";
+
+
+    QSettings settings(QString("HKEY_CURRENT_USER\\SOFTWARE\\Classes"),
+                           QSettings::NativeFormat);
+
+    QString documentID = settings.value(QString("%1/Default").arg(fileExtension)).toString();
+
+    if(documentID.size() == 0)
+    {
+        documentID = "Epub.File";
+        settings.setValue(QString("%1/Default").arg(fileExtension), documentID);
+
+    }
+    qDebug() << documentID;
+
+    QString DEFAULT_KEY = QString("%1/shell/%2/Default").arg(documentID, action_name);
+    settings.setValue(DEFAULT_KEY, action_name);
+
+    settings.setValue(QString("%1/shell/%2/Icon").arg(documentID, action_name),
+                      QString("\"%1\",%2").arg(exe_name).arg(0));
+    settings.setValue(QString("%1/shell/%2/command/Default").arg(documentID, action_name),
+                      "\"" + exe_name + "\" \"%1\"");
 }
 

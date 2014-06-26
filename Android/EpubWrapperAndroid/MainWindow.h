@@ -24,6 +24,7 @@ public:
 
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    static void registerQuickAction();
 private slots:
     void startConversion();
     void conversionFinished(bool success, QString error);
