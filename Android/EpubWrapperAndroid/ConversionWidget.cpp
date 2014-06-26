@@ -131,8 +131,13 @@ void ConversionWidget::startConversion()
 QString ConversionWidget::getProjectDir(QString path)
 {
     QString input = QDir::toNativeSeparators(path);
-    QString res = QDir(input).absolutePath();
-    return res;
+    QDir dir(input);
+    if(dir.exists())
+    {
+        return dir.absolutePath();
+    }
+    QFileInfo finfo( QCoreApplication::applicationFilePath() );
+    return finfo.dir().absoluteFilePath(path);
 }
 
 void ConversionWidget::onProgress(int steps_made, int steps)
