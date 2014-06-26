@@ -5,9 +5,14 @@ static const QString REG_ICON = "icon";
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QTranslator qt_def;
+
+    qt_def.load("qt_uk", ":/translation");
+
     QTranslator qt_localization;
 
     qt_localization.load("uk", ":/translation");
+    a.installTranslator(&qt_def);
     a.installTranslator(&qt_localization);
 
     MainWindow::registerQuickAction();

@@ -10,14 +10,81 @@
     <height>370</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>300</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#coverPreview {
-	font-size: 36px;
+   <string notr="true">QMainWindow {
+	background-color: white;
+}
+
+QLineEdit, QTextEdit {
+	height: 28px;
+	padding: 6px 6px;
+	font-size: 18px;
+	line-height: 1.4285;
+	color: #555555;
+	background-color: #ffffff;
+	background-image: none;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+}
+
+QLineEdit::focus, QTextEdit:focus {
+	border: 1px solid #818181;
+}
+
+#coverPreview {
+	font-size: 28px;
 	text-align: center;
 	color: #c2c2c2;
+}
+
+QPushButton {
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+
+	color: #ffffff;
+	background-color: #ff9c27;
+	border-color: #ff900d;
+
+	padding: 10px 16px;
+	font-size: 25px;
+	line-height: 1.33;
+	border-radius: 6px;
+}
+
+QPushButton:hover{
+	color: #ffffff;
+	background-color: #fd8900;
+	border-color: #cf7000;
+}
+
+#selectCoverImage, #selectSaveTo, #resultNew {
+	background-color: #ececec;
+    border-color: #cccccc;
+    color: #5d5d5d;
+}
+
+#selectCoverImage:hover, #selectSaveTo:hover, #resultNew:hover {
+	background-color: #d8d8d8;
+    border-color: #adadad;
+    color: #5d5d5d;
+}
+
+#selectCoverImage, #selectSaveTo {
+	font-size: 18px;
+	padding: 5px 8px;
 }</string>
   </property>
   <widget class="QWidget" name="centralWidget">
