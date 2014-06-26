@@ -8,6 +8,11 @@
 #include <QFileDialog>
 #include <QSettings>
 #include <QCloseEvent>
+#include <QDropEvent>
+#include <QUrl>
+#include <QDragEnterEvent>
+#include <QDragMoveEvent>
+#include <QDragLeaveEvent>
 
 static const QString APPLICATION_NAME(QObject::tr("ePUB to APK"));
 
@@ -41,8 +46,52 @@ MainWindow::MainWindow(QWidget *parent) :
 
         selectEpub(file_name);
     }
+    setAcceptDrops(true);
 
 }
+
+void MainWindow::dragEnterEvent(QDragEnterEvent* event)
+{
+    // if some actions should not be usable, like move, this code must be adopted
+    event->acceptProposedAction();
+}
+
+void MainWindow::dragMoveEvent(QDragMoveEvent* event)
+{
+    // if some actions should not be usable, like move, this code must be adopted
+    event->acceptProposedAction();
+}
+
+
+void MainWindow::dragLeaveEvent(QDragLeaveEvent* event)
+{
+    event->accept();
+}
+
+void MainWindow::dropEvent(QDropEvent* event)
+{
+    const QMimeData* mimeData = event->mimeData();
+
+    // check for our needed mime type, here a file or a list of files
+    if (mimeData->hasUrls())
+    {
+        QString path;
+        QList<QUrl> urlList = mimeData->urls();
+
+        // extract the local paths of the files
+        if(urlList.size() >= 1)
+        {
+            path = urlList.at(0).toLocalFile();
+        }
+
+        // call a function to open the files
+        if(path.size() > 0)
+        {
+            selectEpub(path);
+        }
+    }
+}
+
 
 MainWindow::~MainWindow()
 {

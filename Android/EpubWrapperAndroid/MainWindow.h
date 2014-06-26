@@ -35,6 +35,11 @@ private slots:
 private:
 
     void closeEvent(QCloseEvent *event);
+    void dropEvent(QDropEvent* event);
+    void dragEnterEvent(QDragEnterEvent* event);
+    void dragMoveEvent(QDragMoveEvent* event);
+    void dragLeaveEvent(QDragLeaveEvent* event);
+
     void switchTo(const Form);
     void selectEpub(QString epub_file);
 

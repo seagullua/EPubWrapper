@@ -34,8 +34,16 @@
 	font-size: 36px;
 }
 
-#indexTitle {
+#conversionBookName, #resultBookName2, #resultBookName {
+	font-size: 28px;
+}
+
+#indexTitle, #resultBookName2  {
 	margin-bottom:20px;
+}
+
+#resultFailed, #resultErrorMessage {
+	color: red;
 }
 
 QMainWindow {
