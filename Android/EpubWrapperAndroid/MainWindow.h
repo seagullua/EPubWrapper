@@ -30,9 +30,11 @@ private slots:
     void openApkInFolder();
     void newEpub();
     void tryAgain();
+    void openEpub();
 private:
     void switchTo(const Form);
     void selectEpub(QString epub_file);
+
 
     void openInExplorer(QString file);
     typedef QMap<Form, QWidget*> FormsMap;

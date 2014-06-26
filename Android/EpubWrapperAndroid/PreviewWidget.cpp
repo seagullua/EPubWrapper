@@ -87,7 +87,7 @@ void PreviewWidget::updatePackageName(QString new_name)
 void PreviewWidget::selectCover()
 {
     QString file_name = QFileDialog::getOpenFileName(this, tr("Choose Cover"),
-                                                     "",
+                                                     _epub_file,
                                                      tr("Images (*.png *.jpg *.jpeg)"));
 
     QPixmap img;

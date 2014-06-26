@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QDir>
+#include <QFileDialog>
 
 static const QString APPLICATION_NAME(QObject::tr("ePUB to APK"));
 
@@ -19,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->formFailed, SIGNAL(tryAgain()), this, SLOT(tryAgain()));
     connect(ui->formSuccess, SIGNAL(newEpub()), this, SLOT(newEpub()));
     connect(ui->formSuccess, SIGNAL(openFolder()), this, SLOT(openApkInFolder()));
-
+    connect(ui->formIndex, SIGNAL(openEpub()), this, SLOT(openEpub()));
     _forms[FormConversion] = ui->formCoversion;
     _forms[FormFailed] = ui->formFailed;
     _forms[FormIndex] = ui->formIndex;
@@ -27,12 +28,31 @@ MainWindow::MainWindow(QWidget *parent) :
     _forms[FormSuccess] = ui->formSuccess;
 
     switchTo(FormIndex);
-    selectEpub("E:\\downloads\\moby-dick-20120118.epub");
+
+    //Read file to open from command line
+    QStringList arguments = QCoreApplication::arguments();
+    if(arguments.size() >= 2)
+    {
+        QString file_name = arguments.at(1);
+        selectEpub(file_name);
+    }
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+void MainWindow::openEpub()
+{
+    QString file_name = QFileDialog::getOpenFileName(this, tr("Choose ePUB"),
+                                                     "",
+                                                     tr("ePUB (*.epub)"));
+    if(file_name.size() > 0)
+    {
+        selectEpub(file_name);
+    }
+
 }
 
 void MainWindow::switchTo(const Form f)
@@ -75,7 +95,7 @@ void MainWindow::selectEpub(QString epub_file)
     EpubInfo info(epub_file);
     if(!info.isValidEpub())
     {
-        QMessageBox::critical(this, tr("Error"), tr("This is not a valid ePUB file. Please select another file"));
+        QMessageBox::critical(this, tr("Error"), tr("'%1' is not a valid ePUB file. Please select another file").arg(epub_file));
         return;
     }
     this->setWindowTitle(APPLICATION_NAME + " - " + epub_file);

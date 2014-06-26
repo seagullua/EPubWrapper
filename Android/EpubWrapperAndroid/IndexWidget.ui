@@ -69,7 +69,7 @@
        <item>
         <widget class="QPushButton" name="indexSelectFile">
          <property name="text">
-          <string>Select EPub file</string>
+          <string>Select ePUB file</string>
          </property>
         </widget>
        </item>

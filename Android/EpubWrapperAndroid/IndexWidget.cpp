@@ -6,6 +6,7 @@ IndexWidget::IndexWidget(QWidget *parent) :
     ui(new Ui::IndexWidget)
 {
     ui->setupUi(this);
+    connect(ui->indexSelectFile, SIGNAL(clicked()), this, SIGNAL(openEpub()));
 }
 
 IndexWidget::~IndexWidget()
