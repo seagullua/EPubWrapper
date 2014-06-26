@@ -14,6 +14,8 @@
 #include <QDragMoveEvent>
 #include <QDragLeaveEvent>
 
+
+
 static const QString APPLICATION_NAME(QObject::tr("ePUB to APK"));
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -162,14 +164,15 @@ void MainWindow::selectEpub(QString epub_file)
     ui->formPreview->selectEpub(info);
     switchTo(FormPreview);
 }
-
+#include <Windows.h>
+#pragma comment(lib, "Shell32")
 void MainWindow::openInExplorer(QString file)
 {
     QString param;
     if (!QFileInfo(file).isDir())
-        param = QLatin1String("/select,");
-    param += QDir::toNativeSeparators(file);
-    QProcess::startDetached("explorer.exe", QStringList(param));
+        param = "/select,";
+    param += '"'+QDir::toNativeSeparators(file)+'"';
+    ShellExecuteW(NULL,NULL,L"explorer.exe",param.toStdWString().c_str(),NULL,SW_SHOWNORMAL);
 }
 
 void MainWindow::conversionFinished(bool success, QString error)
