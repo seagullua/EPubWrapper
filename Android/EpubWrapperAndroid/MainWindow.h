@@ -33,6 +33,8 @@ private slots:
     void tryAgain();
     void openEpub();
 private:
+
+    void closeEvent(QCloseEvent *event);
     void switchTo(const Form);
     void selectEpub(QString epub_file);
 

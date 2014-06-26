@@ -45,9 +45,12 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="resultSuccess_2">
+      <widget class="QLabel" name="indexTitle">
        <property name="text">
         <string>Select files for conversion</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>

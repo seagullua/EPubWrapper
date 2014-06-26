@@ -28,6 +28,7 @@ public:
     void useDefaultImage();
     void startConversion();
     QString getLog() const;
+    void cancel();
 private slots:
     void onLog(QString text);
     void onWarning(QString text);

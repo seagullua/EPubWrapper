@@ -40,6 +40,7 @@ void ConversionWidget::onFinish(bool success, QString text)
 }
 void ConversionWidget::setBookName(QString book_name)
 {
+    ui->conversionBookName->setText(book_name);
     _book_name = book_name;
 }
 
@@ -74,6 +75,14 @@ void ConversionWidget::showLog()
     ui->log->verticalScrollBar()->setValue(ui->log->verticalScrollBar()->maximum());
     ui->log->horizontalScrollBar()->setValue(ui->log->horizontalScrollBar()->minimum());
     ui->conversionShowLog->setVisible(false);
+}
+void ConversionWidget::cancel()
+{
+    if(!_compiler.isNull())
+    {
+        _compiler->cancel();
+        _compiler->waitUntilCanceled();
+    }
 }
 
 QString ConversionWidget::getLog() const

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>616</width>
-    <height>370</height>
+    <width>664</width>
+    <height>421</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,8 +20,44 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QMainWindow {
+   <string notr="true">QLabel {
+	font-size: 18px;
+	color: #676767;
+}
+#copyright{
+	font-size: 14px;
+	color: #a7a7a7;
+}
+
+#indexTitle, #conversionTitle, #resultSuccess, #resultFailed {
+	text-align: center;
+	font-size: 36px;
+}
+
+#indexTitle {
+	margin-bottom:20px;
+}
+
+QMainWindow {
 	background-color: white;
+}
+
+QProgressBar  {
+	
+	border: 1px solid #cccccc;
+	background-color: #f5f5f5;
+	border-radius: 4px;
+	padding: 5px;
+	height: 35px;
+}
+
+QProgressBar:chunk {
+	
+	background-color: #ff9c27;
+	width: 50px;
+	border-radius: 4px;
+	margin-left: -2px;
+	margin-right: -2px; 
 }
 
 QLineEdit, QTextEdit {
@@ -70,13 +106,13 @@ QPushButton:hover{
 	border-color: #cf7000;
 }
 
-#selectCoverImage, #selectSaveTo, #resultNew {
+#conversionShowLog, #resultShowLog, #selectCoverImage, #selectSaveTo, #resultNew {
 	background-color: #ececec;
     border-color: #cccccc;
     color: #5d5d5d;
 }
 
-#selectCoverImage:hover, #selectSaveTo:hover, #resultNew:hover {
+#conversionShowLog:hover, #resultShowLog:hover, #selectCoverImage:hover, #selectSaveTo:hover, #resultNew:hover {
 	background-color: #d8d8d8;
     border-color: #adadad;
     color: #5d5d5d;
@@ -105,7 +141,7 @@ QPushButton:hover{
      <widget class="FailedWidget" name="formFailed" native="true"/>
     </item>
     <item>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="copyright">
       <property name="text">
        <string>© 2014 Andrii Chaika, Diana Sirenko</string>
       </property>
@@ -113,7 +149,7 @@ QPushButton:hover{
     </item>
    </layout>
    <zorder>verticalSpacer_9</zorder>
-   <zorder>label</zorder>
+   <zorder>copyright</zorder>
    <zorder>formIndex</zorder>
    <zorder>formPreview</zorder>
    <zorder>formCoversion</zorder>

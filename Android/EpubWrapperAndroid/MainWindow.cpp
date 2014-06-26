@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QSettings>
+#include <QCloseEvent>
 
 static const QString APPLICATION_NAME(QObject::tr("ePUB to APK"));
 
@@ -75,7 +76,11 @@ void MainWindow::switchTo(const Form f)
     }
 
 }
-
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    ui->formCoversion->cancel();
+    event->accept();
+}
 void MainWindow::openApkInFolder()
 {
     openInExplorer(ui->formPreview->getOutputPath());
