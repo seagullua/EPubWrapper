@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = EpubWrapperAndroid
+TARGET = "ePUB To APK"
 TEMPLATE = app
 
 RC_FILE = res.rc
@@ -23,6 +23,8 @@ CONFIG(debug, debug|release) {
 INCLUDEPATH += $$PWD/../../libraries/zlib
 INCLUDEPATH += $$PWD/../../libraries/QuaZIP
 DEFINES += QUAZIP_STATIC
+
+TRANSLATIONS = uk.ts
 
 SOURCES += main.cpp\
         MainWindow.cpp \
@@ -109,3 +111,6 @@ FORMS    += MainWindow.ui \
     SuccessWidget.ui \
     FailedWidget.ui \
     ConversionWidget.ui
+
+RESOURCES += \
+    resources.qrc

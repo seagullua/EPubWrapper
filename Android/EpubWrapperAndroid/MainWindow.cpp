@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     switchTo(FormIndex);
 
+    this->setWindowTitle(APPLICATION_NAME);
+
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
     if(arguments.size() >= 2)
