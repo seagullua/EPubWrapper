@@ -62,10 +62,18 @@ void PreviewWidget::selectEpub(const EpubInfo& info)
 {
     _epub_file = info.getFileName();
 
+    ui->saveToPath->setText(_epub_file+".apk");
     _has_cover = false;
+
+    QString book_name = info.getBookName();
+    if(book_name.size()==0)
+    {
+        book_name = tr("Noname");
+    }
+    ui->bookName->setText(book_name);
+
     if(info.hasCover())
     {
-        ui->bookName->setText(info.getBookName());
         setCover(info.getCover());
         ui->coverImageFile->setText(tr("(default)"));
     }
@@ -73,15 +81,24 @@ void PreviewWidget::selectEpub(const EpubInfo& info)
     {
         ui->coverImageFile->setText(tr("(no cover)"));
     }
-    ui->saveToPath->setText(_epub_file+".apk");
+
+
 }
 
 void PreviewWidget::updatePackageName(QString new_name)
 {
     QString book_name = new_name;
     QString latin = Naming::createLatinName(book_name);
-    QString package_name = "book." + Naming::forPackageName(latin);
+    QString save_name = Naming::forPackageName(latin);
+    QString package_name = "book." + save_name;
     ui->androidPackage->setText(package_name);
+
+    QString full_path = ui->saveToPath->text();
+    QString output_dir = full_path.mid(0, full_path.size() -
+                                             QDir(full_path).dirName().size());
+
+
+    ui->saveToPath->setText(output_dir + save_name + ".apk");
 }
 
 void PreviewWidget::selectCover()

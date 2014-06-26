@@ -133,12 +133,12 @@
         <translation>Створення APK</translation>
     </message>
     <message>
-        <location filename="ConversionWidget.ui" line="54"/>
+        <location filename="ConversionWidget.ui" line="60"/>
         <source>Book Name</source>
         <translation>Назва книжки</translation>
     </message>
     <message>
-        <location filename="ConversionWidget.ui" line="86"/>
+        <location filename="ConversionWidget.ui" line="111"/>
         <source>Show Log</source>
         <translation>Показати Лог</translation>
     </message>
@@ -166,22 +166,22 @@
         <translation>Побудова не успішна</translation>
     </message>
     <message>
-        <location filename="FailedWidget.ui" line="57"/>
+        <location filename="FailedWidget.ui" line="63"/>
         <source>Book Name</source>
         <translation>Назва книжки</translation>
     </message>
     <message>
-        <location filename="FailedWidget.ui" line="66"/>
+        <location filename="FailedWidget.ui" line="78"/>
         <source>Error Message</source>
         <translation>Повідомлення про помилку</translation>
     </message>
     <message>
-        <location filename="FailedWidget.ui" line="73"/>
+        <location filename="FailedWidget.ui" line="88"/>
         <source>Show Log</source>
         <translation>Показати Лог</translation>
     </message>
     <message>
-        <location filename="FailedWidget.ui" line="107"/>
+        <location filename="FailedWidget.ui" line="122"/>
         <source>Try Again</source>
         <translation>Спробувати ще раз</translation>
     </message>
@@ -199,7 +199,7 @@
         <translation>Оберіть файл для створення APK</translation>
     </message>
     <message>
-        <location filename="IndexWidget.ui" line="72"/>
+        <location filename="IndexWidget.ui" line="75"/>
         <source>Select ePUB file</source>
         <translation>Обрати файл ePUB</translation>
     </message>
@@ -207,32 +207,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="MainWindow.ui" line="14"/>
+        <location filename="MainWindow.ui" line="20"/>
         <source>MainWindow</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="MainWindow.ui" line="43"/>
+        <location filename="MainWindow.ui" line="154"/>
         <source>© 2014 Andrii Chaika, Diana Sirenko</source>
         <translation>© 2014 Андрій Чайка, Діана Сіренко</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="50"/>
+        <location filename="MainWindow.cpp" line="102"/>
         <source>Choose ePUB</source>
         <translation>Оберіть ePUB</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="52"/>
+        <location filename="MainWindow.cpp" line="104"/>
         <source>ePUB (*.epub)</source>
         <translation>ePUB (*.epub)</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="100"/>
+        <location filename="MainWindow.cpp" line="156"/>
         <source>Error</source>
         <translation>Сталася помилка</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="100"/>
+        <location filename="MainWindow.cpp" line="156"/>
         <source>&apos;%1&apos; is not a valid ePUB file. Please select another file</source>
         <translation>&apos;%1&apos; не є файлом ePUB. Будь ласка оберіть інший файл</translation>
     </message>
@@ -276,37 +276,42 @@
         <translation>Без обкладинки</translation>
     </message>
     <message>
-        <location filename="PreviewWidget.ui" line="180"/>
+        <location filename="PreviewWidget.ui" line="183"/>
         <source>Convert to APK</source>
         <translation>Створити APK</translation>
     </message>
     <message>
-        <location filename="PreviewWidget.cpp" line="70"/>
+        <location filename="PreviewWidget.cpp" line="71"/>
+        <source>Noname</source>
+        <translation>Без назви</translation>
+    </message>
+    <message>
+        <location filename="PreviewWidget.cpp" line="78"/>
         <source>(default)</source>
         <translation>(із ePUB)</translation>
     </message>
     <message>
-        <location filename="PreviewWidget.cpp" line="74"/>
+        <location filename="PreviewWidget.cpp" line="82"/>
         <source>(no cover)</source>
         <translation>(без обкладинки)</translation>
     </message>
     <message>
-        <location filename="PreviewWidget.cpp" line="89"/>
+        <location filename="PreviewWidget.cpp" line="106"/>
         <source>Choose Cover</source>
         <translation>Оберіть обкладинку</translation>
     </message>
     <message>
-        <location filename="PreviewWidget.cpp" line="91"/>
+        <location filename="PreviewWidget.cpp" line="108"/>
         <source>Images (*.png *.jpg *.jpeg)</source>
         <translation>Зображення (*.png *.jpg *.jpeg)</translation>
     </message>
     <message>
-        <location filename="PreviewWidget.cpp" line="105"/>
+        <location filename="PreviewWidget.cpp" line="122"/>
         <source>Save APK</source>
         <translation>Зберегти APK</translation>
     </message>
     <message>
-        <location filename="PreviewWidget.cpp" line="107"/>
+        <location filename="PreviewWidget.cpp" line="124"/>
         <source>Android APK (*.apk)</source>
         <translation>Android APK (*.apk)</translation>
     </message>
@@ -314,7 +319,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="MainWindow.cpp" line="10"/>
+        <location filename="MainWindow.cpp" line="17"/>
         <source>ePUB to APK</source>
         <translation>ePUB to APK</translation>
     </message>
@@ -368,17 +373,17 @@
         <translation>Успішно</translation>
     </message>
     <message>
-        <location filename="SuccessWidget.ui" line="57"/>
+        <location filename="SuccessWidget.ui" line="63"/>
         <source>Book Name</source>
         <translation>Назва книжки</translation>
     </message>
     <message>
-        <location filename="SuccessWidget.ui" line="81"/>
+        <location filename="SuccessWidget.ui" line="93"/>
         <source>Open Folder</source>
         <translation>Відкирити папку з книжкою</translation>
     </message>
     <message>
-        <location filename="SuccessWidget.ui" line="88"/>
+        <location filename="SuccessWidget.ui" line="100"/>
         <source>New</source>
         <translation>Новий ePUB</translation>
     </message>

@@ -156,6 +156,7 @@ void MainWindow::selectEpub(QString epub_file)
         QMessageBox::critical(this, tr("Error"), tr("'%1' is not a valid ePUB file. Please select another file").arg(epub_file));
         return;
     }
+    setAcceptDrops(false);
     this->setWindowTitle(APPLICATION_NAME + " - " + epub_file);
 
     ui->formPreview->selectEpub(info);
