@@ -6,7 +6,7 @@
 #include <QFileInfo>
 #include <QDir>
 
-static const QString APPLICATION_NAME(QObject::tr("EPub To APK"));
+static const QString APPLICATION_NAME(QObject::tr("ePUB to APK"));
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -75,7 +75,7 @@ void MainWindow::selectEpub(QString epub_file)
     EpubInfo info(epub_file);
     if(!info.isValidEpub())
     {
-        QMessageBox::critical(this, tr("Error"), tr("This is not a valid EPub file. Please select another file"));
+        QMessageBox::critical(this, tr("Error"), tr("This is not a valid ePUB file. Please select another file"));
         return;
     }
     this->setWindowTitle(APPLICATION_NAME + " - " + epub_file);

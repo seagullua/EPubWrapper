@@ -11,6 +11,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = EpubWrapperAndroid
 TEMPLATE = app
 
+RC_FILE = res.rc
+
+
+
 CONFIG(debug, debug|release) {
     DESTDIR = $$PWD/bin/debug/
 } else {
